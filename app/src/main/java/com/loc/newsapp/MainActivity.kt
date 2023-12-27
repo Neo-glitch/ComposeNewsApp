@@ -1,37 +1,20 @@
 package com.loc.newsapp
 
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import com.loc.newsapp.domain.usecases.AppEntryUseCases
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.loc.newsapp.presentation.navgraph.NavGraph
-import com.loc.newsapp.presentation.onboarding.OnBoardingScreen
-import com.loc.newsapp.presentation.onboarding.OnBoardingViewModel
 import com.loc.newsapp.ui.theme.NewsAppTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -73,6 +56,18 @@ class MainActivity : ComponentActivity() {
         // to setup splash screen
         setContent {
             NewsAppTheme {
+
+                val isSystemInDarkMode = isSystemInDarkTheme()
+                val systemUiController = rememberSystemUiController()
+
+                SideEffect {
+                    // runs after every composition completes
+                    systemUiController.setSystemBarsColor(
+                        color = Color.Transparent,
+                        darkIcons = !isSystemInDarkMode
+                    )
+                }
+
                 Surface(color = MaterialTheme.colorScheme.background) {
                     // creates a viewModel tied to this activity
 //                    val viewModel: OnBoardingViewModel = hiltViewModel()

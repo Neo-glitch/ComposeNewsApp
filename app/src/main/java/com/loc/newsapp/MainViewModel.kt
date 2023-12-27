@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.loc.newsapp.domain.usecases.AppEntryUseCases
+import com.loc.newsapp.domain.usecases.app_entry.AppEntryUseCases
 import com.loc.newsapp.presentation.navgraph.Route
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -28,10 +28,10 @@ class MainViewModel @Inject constructor(
     init {
         appEntryUseCase.readAppEntry().onEach { shouldStartFromHomeScreen ->
             // on each emission of this
-            if (shouldStartFromHomeScreen) {
-                startDestination = Route.NewsNavigation.route
+            startDestination = if (shouldStartFromHomeScreen) {
+                Route.NewsNavigation.route
             } else {
-                startDestination = Route.AppStartNavigation.route
+                Route.AppStartNavigation.route
             }
             delay(300)
             splashCondition = false

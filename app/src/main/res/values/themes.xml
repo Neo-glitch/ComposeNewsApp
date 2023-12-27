@@ -2,8 +2,8 @@
 <resources>
     <style name="Theme.NewsApp" parent="android:Theme.Material.Light.NoActionBar" >
         <!-- for making navigation bar and status bar to be translucent without using compose library for it-->
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+<!--        <item name="android:windowTranslucentStatus">true</item>-->
+<!--        <item name="android:windowTranslucentNavigation">true</item>-->
     </style>
 
 </resources>
