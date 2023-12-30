@@ -50,7 +50,7 @@ fun ArticleCard(
             model = ImageRequest.Builder(context = context)
                 .data(article.urlToImage)
                 .build(),
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.Crop, // makes image scale and fill with crop
             contentDescription = null
         )
         Column(
