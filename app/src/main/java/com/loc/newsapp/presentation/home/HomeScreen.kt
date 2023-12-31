@@ -33,7 +33,8 @@ import com.loc.newsapp.presentation.navgraph.Route
 @Composable
 fun HomeScreen(
     articles: LazyPagingItems<Article>,
-    navigate: (String) -> Unit // to navigate from home to another screen
+    navigateToSearch: () -> Unit,
+    navigateToDetails: (Article) -> Unit
 ) {
     val emoji = "\uD83d\uDFE5"
     val titles by remember {
@@ -73,7 +74,7 @@ fun HomeScreen(
             modifier = Modifier.padding(horizontal = MediumPadding1),
             text = "", readOnly = true,
             onValueChange = {},
-            onClick = { navigate(Route.SearchScreen.route) },
+            onClick = { navigateToSearch() },
             onSearch = {}
         )
 
@@ -93,7 +94,7 @@ fun HomeScreen(
             modifier = Modifier.padding(horizontal = MediumPadding1),
             articles = articles,
         ){
-            navigate(Route.DetailScreen.route)
+           navigateToDetails(it)
         }
 
     }
