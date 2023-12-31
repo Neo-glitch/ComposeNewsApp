@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.LoadState
@@ -15,14 +14,35 @@ import com.loc.newsapp.domain.model.Article
 import com.loc.newsapp.presentation.Dimens.ExtraSmallPadding2
 import com.loc.newsapp.presentation.Dimens.MediumPadding1
 
+
 @Composable
 fun ArticlesList(
     modifier: Modifier = Modifier,
-    articles : LazyPagingItems<Article>, // to work with paging Compose
+    articles: List<Article>, // to work with paging Compose
     onCLick: (Article) -> Unit
-){
+) {
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(MediumPadding1),
+        contentPadding = PaddingValues(all = ExtraSmallPadding2)
+    ) {
+        items(count = articles.size) {
+            val article = articles[it]
+            ArticleCard(article = article) { onCLick(article) }
+        }
+
+    }
+
+}
+
+@Composable
+fun ArticlesList(
+    modifier: Modifier = Modifier,
+    articles: LazyPagingItems<Article>, // to work with paging Compose
+    onCLick: (Article) -> Unit
+) {
     val handlePagingResult = HandlePagingResult(articles = articles)
-    if(handlePagingResult){
+    if (handlePagingResult) {
         // data fetch success
         LazyColumn(
             modifier = modifier.fillMaxSize(),
